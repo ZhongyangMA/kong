@@ -7,7 +7,6 @@ local raw_log = require "ngx.errlog".raw_log
 
 local kong = kong
 local ngx = ngx
-local ngx_timer_at = ngx.timer.at
 local cjson_encode = cjson.encode
 local mp_pack = msgpack.pack
 local mp_unpacker = msgpack.unpacker
@@ -89,7 +88,7 @@ do
       return
     end
 
-    ngx_timer_at(0, function(premature)
+    kong.async:run(function(premature)
       if premature then
         return
       end
@@ -498,7 +497,7 @@ local get_plugin do
         plugin[phase] = function(self, conf)
           local serialize_data = kong.log.serialize()
 
-          ngx_timer_at(0, function()
+          kong.async:run(function()
             local co = coroutine.running()
             preloaded_stuff[co] = serialize_data
 

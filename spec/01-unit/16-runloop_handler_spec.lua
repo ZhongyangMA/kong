@@ -25,6 +25,9 @@ local function setup_it_block()
         err = function() end,
         warn = function() end,
       },
+      async = {
+        run = function(...) end,
+      },
       response = {
         exit = function() end,
       },

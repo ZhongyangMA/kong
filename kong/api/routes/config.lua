@@ -4,7 +4,6 @@ local errors = require("kong.db.errors")
 
 
 local kong = kong
-local ngx = ngx
 local dc = declarative.new_config(kong.configuration)
 local table = table
 local tostring = tostring
@@ -120,7 +119,7 @@ return {
 
       _reports.decl_fmt_version = meta._format_version
 
-      ngx.timer.at(0, reports_timer)
+      kong.async:run(reports_timer)
 
       declarative.sanitize_output(entities)
       return kong.response.exit(201, entities)

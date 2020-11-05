@@ -44,7 +44,7 @@ end
 
 
 local function post_process(data)
-  ngx.timer.at(0, reports_timer, data)
+  kong.async:run(reports_timer, data)
   return data
 end
 
