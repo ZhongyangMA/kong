@@ -82,6 +82,10 @@ return {
           running = ngx.timer.running_count(),
           pending = ngx.timer.pending_count()
         },
+        async = {
+          running = kong.async.running,
+          pending = kong.async.size,
+        },
         plugins = {
           available_on_server = singletons.configuration.loaded_plugins,
           enabled_in_cluster = distinct_plugins
